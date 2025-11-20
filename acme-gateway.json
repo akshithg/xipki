@@ -1,0 +1,21 @@
+{
+  "acme": {
+  "baseUrl": "http://localhost:8080/gateway/acme/",
+    "nonceNumBytes": 16,
+    "tokenNumBytes": 16,
+    "cacheSize": 1000,
+    "syncDbSeconds": 60,
+    "dbConf": "etc/acme/database/acme-db.properties",
+  "website": "http://localhost:8080/gateway/acme",
+    "challengeTypes": ["dns-01", "http-01", "tls-alpn-01"],
+    "cleanupOrder": {
+      "expiredCertDays": 390,
+      "expiredOrderDays": 390
+    },
+    "caProfiles": [{
+      "ca": "myca1",
+      "tlsProfile": "tls",
+      "keyTypes": ["1.2.840.10045.2.1", "1.2.840.113549.1.1.1"]
+    }]
+  }
+}

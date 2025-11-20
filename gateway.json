@@ -1,0 +1,33 @@
+{
+  "protocols": {
+    "acme": true,
+    "cmp": false,
+    "est": false,
+    "rest": false,
+    "scep": false
+  },
+  "logReqResp": true,
+  "reverseProxyMode": "NO",
+  "pop": {
+    "sigAlgos": ["SHA256withRSA", "SHA256withECDSA"]
+  },
+  "sdkClient": {
+    "serverUrl": "http://localhost:8080/ca/rest",
+    "ssl": {
+      "storeType": "PKCS12",
+      "keystore": { "file": "etc/keystore/gateway.p12" },
+      "keystorePassword": "changeit",
+      "trustanchors": [],
+      "name": "gateway-client"
+    }
+  },
+  "security": {
+    "defaultSignerParallelism": 1,
+    "keyStrongrandomEnabled": false,
+    "signStrongrandomEnabled": false,
+    "signerFactories": []
+  },
+  "audit": {
+    "type": "embed"
+  }
+}

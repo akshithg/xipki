@@ -1,0 +1,70 @@
+{
+  "basedir": "/usr/local/tomcat/xipki",
+  "properties": {},
+  "signers": [],
+  "keypairGens": [],
+  "requestors": [{
+    "name": "requestor1",
+    "type": "password",
+    "conf": {
+      "value": "password=123456"
+    }
+  }],
+  "publishers": [],
+  "profiles": [{
+    "name": "rootca",
+    "type": "xml",
+    "conf": {
+      "value": "\u003cxmlfile\u003e/usr/local/tomcat/xipki/etc/ca/example/sm/certprofile-rootca.xml\u003c/xmlfile\u003e"
+    }
+  }, {
+    "name": "tls",
+    "type": "xml",
+    "conf": {
+      "value": "\u003cxmlfile\u003e/usr/local/tomcat/xipki/etc/ca/example/sm/certprofile-tls.xml\u003c/xmlfile\u003e"
+    }
+  }],
+  "cas": [{
+    "name": "myca1",
+    "aliases": ["subca"],
+    "caInfo": {
+      "caUris": {
+        "crlUris": ["http://localhost:8080/crl/myca1"],
+        "ocspUris": ["http://localhost:8080/ocsp/"]
+      },
+      "keypairGenNames": ["software"],
+      "crlControl": {
+        "interval.hours": 24,
+        "fullcrl.intervals": 7,
+        "overlap": "3d",
+        "interval.time": "02:00"
+      },
+      "expirationPeriod": 365,
+      "genSelfIssued": {
+        "subject": "CN=MyCA1,O=XiPKI Demo",
+        "profile": "rootca",
+        "serialNumber": "1"
+      },
+      "keepExpiredCertDays": -1,
+      "maxValidity": "10y",
+      "nextCrlNo": 2,
+      "permissions": ["all"],
+      "saveCert": true,
+      "saveKeypair": false,
+      "signerType": "pkcs12",
+      "signerConf": {
+        "value": "algo=SHA256WITHECDSA,password=1234,keystore=file:/usr/local/tomcat/xipki/keycerts/myca1.p12"
+      },
+      "snSize": 20,
+      "status": "active",
+      "validityMode": "cutoff"
+    },
+    "profiles": ["tls"],
+    "publishers": [],
+    "requestors": [{
+      "requestorName": "requestor1",
+      "permissions": ["all"],
+      "profiles": ["all"]
+    }]
+  }]
+}

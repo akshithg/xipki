@@ -1,0 +1,25 @@
+services:
+  xipki-db:
+    image: mariadb:10
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_USER: xipki
+      MYSQL_PASSWORD: xipkipw
+      MYSQL_DATABASE: ca
+    volumes:
+      - ./docker-mariadb-init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+
+  xipki-ca:
+    build: .
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    depends_on:
+      - xipki-db
+    environment:
+      - XIPKI_DB_HOST=xipki-db
+      - XIPKI_DB_PORT=3306
+      - XIPKI_DB_USER=xipki
+      - XIPKI_DB_PASSWORD=xipkipw
