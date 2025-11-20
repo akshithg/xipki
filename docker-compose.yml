@@ -16,6 +16,11 @@ services:
     ports:
       - "8080:8080"
       - "8443:8443"
+    networks:
+      - default
+      - acme-net
+    dns:
+      - 172.30.0.2
     depends_on:
       - xipki-db
     environment:
@@ -23,3 +28,10 @@ services:
       - XIPKI_DB_PORT=3306
       - XIPKI_DB_USER=xipki
       - XIPKI_DB_PASSWORD=xipkipw
+
+networks:
+  default:
+    driver: bridge
+  acme-net:
+    external: true
+    name: acme-net
